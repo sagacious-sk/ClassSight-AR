@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>ClassSight AI — AR</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+  <!-- MindAR -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
+
+    #arMessage {
+      position: fixed;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      width: min(90%, 380px);
+      padding: 24px;
+      border-radius: 22px;
+
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
+
+      text-align: center;
+
+      z-index: 9999;
+
+      display: none;
+    }
+
+    #arMessage .logo {
+      font-size: 25px;
+      font-weight: 800;
+      color: #142b5f;
+      margin-bottom: 8px;
+    }
+
+    #arMessage .logo span {
+      color: #1688ff;
+    }
+
+    #arMessage p {
+      margin: 8px 0 18px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    #visitWebsite {
+      display: inline-block;
+      padding: 13px 25px;
+
+      border-radius: 12px;
+
+      background: #1677ff;
+      color: white;
+
+      text-decoration: none;
+      font-weight: 700;
+
+      box-shadow: 0 8px 20px rgba(22, 119, 255, 0.3);
+    }
+
+    #visitWebsite:active {
+      transform: scale(0.97);
+    }
+
+    #scanHint {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      padding: 12px 20px;
+
+      border-radius: 30px;
+
+      background: rgba(0, 0, 0, 0.65);
+      color: white;
+
+      font-size: 14px;
+      text-align: center;
+
+      z-index: 9998;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Instruction -->
+  <div id="scanHint">
+    Point your camera at the ClassSight AI poster
+  </div>
+
+  <!-- AR Scene -->
+  <a-scene
+    mindar-image="
+      imageTargetSrc: ./AI%20targets.mind;
+      maxTrackables: 1;
+    "
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true"
+  >
+
+    <a-camera
+      position="0 0 0"
+      look-controls="enabled: false"
+      cursor="fuse: false"
+      raycaster="objects: .clickable"
+    >
+    </a-camera>
+
+    <!-- Poster target -->
+    <a-entity mindar-image-target="targetIndex: 0">
+
+    </a-entity>
+
+  </a-scene>
+
+  <!-- AR Information Card -->
+  <div id="arMessage">
+
+    <div class="logo">
+      ClassSight <span>AI</span>
+    </div>
+
+    <p>
+      See Learning. Build Tomorrow.<br>
+      Explore our AI-powered smart classroom platform.
+    </p>
+
+    <a
+      id="visitWebsite"
+      href="/"
+    >
+      Visit Website →
+    </a>
+
+  </div>
+
+  <script>
+
+    const arMessage = document.getElementById("arMessage");
+    const scanHint = document.getElementById("scanHint");
+
+    const target = document.querySelector(
+      '[mindar-image-target="targetIndex: 0"]'
+    );
+
+    target.addEventListener("targetFound", () => {
+
+      console.log("ClassSight AI poster detected");
+
+      arMessage.style.display = "block";
+      scanHint.style.display = "none";
+
+    });
+
+    target.addEventListener("targetLost", () => {
+
+      console.log("ClassSight AI poster lost");
+
+      arMessage.style.display = "none";
+      scanHint.style.display = "block";
+
+    });
+
+  </script>
+
+</body>
+</html>
