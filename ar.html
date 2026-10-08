@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -20,24 +21,33 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       font-family: Arial, sans-serif;
       background: #000;
     }
 
+    /* AR information card */
     #arMessage {
       position: fixed;
       left: 50%;
       bottom: 40px;
       transform: translateX(-50%);
+
       width: min(90%, 380px);
+
       padding: 24px;
+
       border-radius: 22px;
 
       background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
+
+      box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.35);
 
       text-align: center;
 
@@ -46,6 +56,7 @@
       display: none;
     }
 
+    /* Logo */
     #arMessage .logo {
       font-size: 25px;
       font-weight: 800;
@@ -57,45 +68,65 @@
       color: #1688ff;
     }
 
+    /* Description */
     #arMessage p {
       margin: 8px 0 18px;
+
       color: #555;
+
       line-height: 1.5;
+
+      font-size: 15px;
     }
 
+    /* Website button */
     #visitWebsite {
       display: inline-block;
+
       padding: 13px 25px;
 
       border-radius: 12px;
 
       background: #1677ff;
-      color: white;
+
+      color: #ffffff;
 
       text-decoration: none;
+
       font-weight: 700;
 
-      box-shadow: 0 8px 20px rgba(22, 119, 255, 0.3);
+      box-shadow:
+        0 8px 20px rgba(22, 119, 255, 0.30);
+
+      transition: transform 0.15s ease;
     }
 
     #visitWebsite:active {
       transform: scale(0.97);
     }
 
+    /* Scan instruction */
     #scanHint {
       position: fixed;
+
       top: 25px;
       left: 50%;
+
       transform: translateX(-50%);
+
+      width: max-content;
+      max-width: 90%;
 
       padding: 12px 20px;
 
       border-radius: 30px;
 
       background: rgba(0, 0, 0, 0.65);
+
       color: white;
 
       font-size: 14px;
+
       text-align: center;
 
       z-index: 9998;
@@ -105,12 +136,16 @@
 
 <body>
 
-  <!-- Instruction -->
+  <!-- Scan instruction -->
   <div id="scanHint">
     Point your camera at the ClassSight AI poster
   </div>
 
-  <!-- AR Scene -->
+
+  <!-- =========================
+       MINDAR AR SCENE
+       ========================= -->
+
   <a-scene
     mindar-image="
       imageTargetSrc: ./AI%20targets.mind;
@@ -122,22 +157,28 @@
     device-orientation-permission-ui="enabled: true"
   >
 
+    <!-- Camera -->
     <a-camera
       position="0 0 0"
       look-controls="enabled: false"
       cursor="fuse: false"
-      raycaster="objects: .clickable"
     >
     </a-camera>
 
-    <!-- Poster target -->
-    <a-entity mindar-image-target="targetIndex: 0">
 
+    <!-- Poster target -->
+    <a-entity
+      mindar-image-target="targetIndex: 0"
+    >
     </a-entity>
 
   </a-scene>
 
-  <!-- AR Information Card -->
+
+  <!-- =========================
+       AR INFORMATION CARD
+       ========================= -->
+
   <div id="arMessage">
 
     <div class="logo">
@@ -149,38 +190,71 @@
       Explore our AI-powered smart classroom platform.
     </p>
 
+    <!--
+      CURRENTLY:
+      This points to the local ClassSight website.
+
+      IMPORTANT:
+      127.0.0.1 means the device opening this link.
+      We will replace this with the real website URL later.
+    -->
+
     <a
       id="visitWebsite"
-      href="/"
+      href="http://127.0.0.1:5000"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       Visit Website →
     </a>
 
   </div>
 
+
   <script>
 
-    const arMessage = document.getElementById("arMessage");
-    const scanHint = document.getElementById("scanHint");
+    const arMessage =
+      document.getElementById("arMessage");
 
-    const target = document.querySelector(
-      '[mindar-image-target="targetIndex: 0"]'
-    );
+    const scanHint =
+      document.getElementById("scanHint");
+
+
+    const target =
+      document.querySelector(
+        '[mindar-image-target="targetIndex: 0"]'
+      );
+
+
+    /* =========================
+       POSTER DETECTED
+       ========================= */
 
     target.addEventListener("targetFound", () => {
 
-      console.log("ClassSight AI poster detected");
+      console.log(
+        "ClassSight AI poster detected"
+      );
 
       arMessage.style.display = "block";
+
       scanHint.style.display = "none";
 
     });
 
+
+    /* =========================
+       POSTER LOST
+       ========================= */
+
     target.addEventListener("targetLost", () => {
 
-      console.log("ClassSight AI poster lost");
+      console.log(
+        "ClassSight AI poster lost"
+      );
 
       arMessage.style.display = "none";
+
       scanHint.style.display = "block";
 
     });
