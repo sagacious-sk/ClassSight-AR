@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClassSight AI — Smart Classroom Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <main id="authPage" class="auth-page">
+    <section class="auth-visual">
+      <div class="brand brand-light"><span class="brand-mark">✦</span> ClassSight <b>AI</b></div>
+      <div class="visual-copy">
+        <span class="eyebrow">SMART CLASSROOM INTELLIGENCE</span>
+        <h1>See the classroom.<br><span>Understand the learning.</span></h1>
+        <p>AI-powered attendance, engagement insights and classroom intelligence—built to make teaching easier.</p>
+        <div class="trust-row">
+          <div><strong>98.4%</strong><small>Recognition accuracy</small></div>
+          <div><strong>24/7</strong><small>Classroom insights</small></div>
+          <div><strong>1 place</strong><small>For every report</small></div>
+        </div>
+      </div>
+      <div class="visual-orbit orbit-one"></div>
+      <div class="visual-orbit orbit-two"></div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="mobile-brand brand"><span class="brand-mark">✦</span> ClassSight <b>AI</b></div>
+      <div class="auth-card">
+        <div class="auth-heading">
+          <span class="eyebrow">WELCOME BACK</span>
+          <h2 id="authTitle">Sign in to ClassSight</h2>
+          <p id="authSubtitle">Choose your role and continue to your classroom.</p>
+        </div>
+
+        <div class="role-switch">
+          <button class="role-btn active" data-role="faculty" onclick="selectRole('faculty')">Faculty</button>
+          <button class="role-btn" data-role="student" onclick="selectRole('student')">Student</button>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <label>Email address</label>
+          <input id="email" type="email" placeholder="you@college.edu" required>
+          <label>Password</label>
+          <div class="password-wrap">
+            <input id="password" type="password" placeholder="Enter your password" required>
+            <button type="button" onclick="togglePassword()">Show</button>
+          </div>
+          <div class="form-row">
+            <label class="check"><input type="checkbox"> Remember me</label>
+            <a href="#" onclick="showToast('Password recovery will be connected to the backend.')">Forgot password?</a>
+          </div>
+          <button class="primary-btn full" type="submit">Sign in <span>→</span></button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+        <button class="secondary-btn full" onclick="demoLogin()">Explore demo dashboard</button>
+        <p class="signup-text">New to ClassSight? <a href="#" onclick="toggleSignup(event)">Create an account</a></p>
+      </div>
+      <p class="auth-footer">© 2026 ClassSight AI · Smart classroom platform</p>
+    </section>
+  </main>
+
+  <main id="appPage" class="app-page hidden">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">✦</span> ClassSight <b>AI</b></div>
+      <div class="sidebar-role" id="sidebarRole"></div>
+      <nav id="facultyNav" class="nav">
+        <button class="nav-item active" onclick="showSection('overview',this)">⌂ <span>Overview</span></button>
+        <button class="nav-item" onclick="showSection('classes',this)">▣ <span>My Classes</span></button>
+        <button class="nav-item" onclick="showSection('students',this)">♙ <span>Students</span></button>
+        <button class="nav-item" onclick="showSection('engagement',this)">◔ <span>AI Engagement</span></button>
+        <button class="nav-item" onclick="showSection('incidents',this)">⚠ <span>AI Alerts</span><i>2</i></button>
+        <button class="nav-item" onclick="showSection('notes',this)">▤ <span>Lecture Notes</span></button>
+        <button class="nav-item" onclick="showSection('reports',this)">▥ <span>Reports</span></button>
+      </nav>
+      <nav id="studentNav" class="nav hidden">
+        <button class="nav-item active" onclick="showSection('studentOverview',this)">⌂ <span>Overview</span></button>
+        <button class="nav-item" onclick="showSection('attendance',this)">◷ <span>My Attendance</span></button>
+        <button class="nav-item" onclick="showSection('studentNotes',this)">▤ <span>Lecture Notes</span></button>
+        <button class="nav-item" onclick="showSection('studentAlerts',this)">⚠ <span>My Alerts</span><i>1</i></button>
+        <button class="nav-item" onclick="showSection('timetable',this)">▦ <span>Timetable</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" onclick="showToast('Settings will be connected to the backend.')">⚙ <span>Settings</span></button>
+        <button class="nav-item logout" onclick="logout()">↪ <span>Sign out</span></button>
+      </div>
+    </aside>
+
+    <section class="content">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumb">ClassSight AI <span>/</span> <strong id="pageName">Overview</strong></div>
+          <h2 id="greeting">Good evening, Senthil</h2>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" onclick="showToast('No new system notifications.')">♢<i></i></button>
+          <div class="profile" onclick="showToast('Profile menu')">
+            <div class="avatar" id="avatar">SK</div>
+            <div><strong id="profileName">Senthil Kumar</strong><small id="profileRole">Faculty</small></div>
+            <span>⌄</span>
+          </div>
+        </div>
+      </header>
+
+      <div id="dashboardContent"></div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
